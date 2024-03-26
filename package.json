@@ -10,9 +10,6 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "publishConfig": {
-    "access": "restricted"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build && mv dist/react-notion-components.js dist/main.js && tailwindcss -i ./src/globals.css -o ./dist/style.css",
