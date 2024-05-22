@@ -44,8 +44,8 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		// customBlockComponents,
 		customDecoratorComponents,
 		// metaData,
-		notionData,
 	} = props;
+
 	const blockValue = block?.value;
 
 	const renderComponent = () => {
@@ -96,7 +96,21 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							page_small_text,
 						} = blockValue.format || {};
 
-						const pageCover = notionData?.cover?.external?.url || page_cover;
+						// const {
+						// 	title,
+						// 	description,
+						// 	slug,
+						// 	shareTitle,
+						// 	lastEditedTime,
+						// 	publishDate,
+						// 	eventDate,
+						// 	categor,
+						// 	tags,
+						// 	authors,
+						// 	canonical,
+						// } = metaData;
+
+						const pageCover = page_cover;
 						return (
 							<div className="notion">
 								{!hideHeader && (
@@ -136,9 +150,13 @@ export const Block: React.FC<BlockInterface> = (props) => {
 									{/* <div className="flex flex-row flex-wrap items-center justify-start">
 										{metaData?.tags?.length &&
 											metaData?.tags.map((tag) => (
-												<div className="mr-2" key={tag}>
-													<span className="text-xs text-gray-500">{tag}</span>
-												</div>
+												<a
+													key={tag}
+													href={`/tags/${tag}`}
+													className="mx-1 p-1 border border-gray-400 rounded-xl text-xs"
+												>
+													{tag}
+												</a>
 											))}
 									</div> */}
 
@@ -153,24 +171,24 @@ export const Block: React.FC<BlockInterface> = (props) => {
 								</main>
 							</div>
 						);
-					} else {
-						return <main className="notion">{children}</main>;
 					}
-				} else {
-					if (!blockValue.properties) return null;
-					return (
-						<a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
-							{blockValue.format && (
-								<div className="notion-page-icon">
-									<PageIcon block={block} mapImageUrl={mapImageUrl} />
-								</div>
-							)}
-							<div className="notion-page-text">
-								{renderChildText(blockValue.properties.title)}
-							</div>
-						</a>
-					);
+
+					return <main className="notion">{children}</main>;
 				}
+
+				if (!blockValue.properties) return null;
+				return (
+					<a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
+						{blockValue.format && (
+							<div className="notion-page-icon">
+								<PageIcon block={block} mapImageUrl={mapImageUrl} />
+							</div>
+						)}
+						<div className="notion-page-text">
+							{renderChildText(blockValue.properties.title)}
+						</div>
+					</a>
+				);
 			case "header":
 				if (!blockValue.properties) return null;
 				return (
@@ -194,7 +212,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 				);
 			case "divider":
 				return <hr className="my-6 border-t border-gray-300" />;
-			case "text": {
+			case "text":
 				const blockColor = blockValue.format?.block_color;
 				if (!blockValue.properties) {
 					return <div className="notion-blank">&nbsp;</div>;
@@ -204,7 +222,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						{renderChildText(blockValue.properties.title)}
 					</p>
 				);
-			}
 			case "bulleted_list":
 				if (!blockValue.properties) return null;
 				return (
