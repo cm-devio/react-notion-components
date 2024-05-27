@@ -13,6 +13,7 @@ import { CoverImage } from "@/components/ui/coverImage";
 import HubSpotForm from "@/components/ui/hubSpotForm";
 import { Slash } from "lucide-react";
 import type * as React from "react";
+import { useEffect, useState } from "react";
 import Asset from "./asset";
 import Code from "./code";
 import { createRenderChildText } from "./createRenderChildText";
@@ -47,6 +48,12 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		notionData,
 	} = props;
 	const blockValue = block?.value;
+
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
 	const renderComponent = () => {
 		const renderChildText = createRenderChildText(customDecoratorComponents);
@@ -582,5 +589,5 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		}
 	};
 
-	return renderComponent();
+	return <>{isClient && renderComponent()}</>;
 };
