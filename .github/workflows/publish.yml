@@ -30,7 +30,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8 
+          version: 8
 
       - name: Install dependencies 
         run: pnpm install --frozen-lockfile
@@ -72,6 +72,11 @@ jobs:
         with:
           name: build-artifacts
           path: ./dist 
+
+      - name: Setup pnpm (for publish step)
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
 
       - name: Publish GitHub Packages 
         run: pnpm publish
