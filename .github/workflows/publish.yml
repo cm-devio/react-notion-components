@@ -1,29 +1,73 @@
-name: publish package
+name: Publish Package
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
+  build:
+    name: Build Package
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    permissions:
+      contents: read 
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v4.1.0
+
+      - name: Setup Node.js ️
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 
+
+      - name: Install dependencies 
+        run: pnpm install --frozen-lockfile
+
+      - name: Build 
+        run: pnpm run build 
+
+      - name: Upload artifacts 
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./dist 
+
   publish:
-    runs-on: ubuntu-latest
+    needs: build
+    name: Publish GitHub Packages
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
     permissions:
       packages: write
       contents: read
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Checkout 
+        uses: actions/checkout@v4.1.0
+
+      - name: Setup Node.js ️
+        uses: actions/setup-node@v3
         with:
-          version: 8  # Specify the desired pnpm version
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          node-version: 18
 
-      - name: Update package.json version  # Adapt for pnpm versioning strategy
-        run: echo "Skipping version update on push event (adapt for pnpm)"
+      - name: Download artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./dist 
 
-      - name: Publish package
-        run: pnpm publish --access restricted
+      - name: Publish GitHub Packages 
+        run: pnpm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PACKAGES_NPM_PUBLISH_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

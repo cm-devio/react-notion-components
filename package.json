@@ -10,6 +10,9 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "publishConfig": {
+    "@watsuyo:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build && mv dist/react-notion-components.js dist/main.js && tailwindcss -i ./src/globals.css -o ./dist/style.css",
@@ -48,9 +51,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vite-plugin-dts": "^3.7.3"
-  },
-  "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com/watsuyo"
   }
 }
