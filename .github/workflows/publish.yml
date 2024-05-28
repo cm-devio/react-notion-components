@@ -1,11 +1,12 @@
 name: Publish Package
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
+
 jobs:
   build:
+    needs: []  # Replace with any required dependencies (e.g., 'test')
     name: Build Package
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
@@ -15,7 +16,7 @@ jobs:
         os: [ubuntu-latest]
 
     permissions:
-      contents: read 
+      contents: read  # Read access for repository content
 
     steps:
       - name: Checkout 
@@ -24,19 +25,24 @@ jobs:
       - name: Setup Node.js ️
         uses: actions/setup-node@v3
         with:
-          node-version: 18 
+          node-version: 18  # Adjust if needed
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8  # Replace with your desired pnpm version
 
       - name: Install dependencies 
         run: pnpm install --frozen-lockfile
 
       - name: Build 
-        run: pnpm run build 
+        run: pnpm run build  # Replace with your build command
 
       - name: Upload artifacts 
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: ./dist 
+          path: ./dist  # Replace with your build output directory
 
   publish:
     needs: build
@@ -49,8 +55,8 @@ jobs:
         os: [ubuntu-latest]
 
     permissions:
-      packages: write
-      contents: read
+      packages: write # GitHub Packagesへの書き込み権限が必要
+      contents: read # リポジトリの内容の読み取り権限が必要
 
     steps:
       - name: Checkout 
@@ -65,9 +71,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: ./dist 
+          path: ./dist  # Replace with your build output directory
 
       - name: Publish GitHub Packages 
         run: pnpm publish
         env:
-          GITHUB_PACKAGES_NPM_PUBLISH_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_PACKAGES_NPM_PUBLISH_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} # permissionsで指定した権限を持つGITHUB_TOKENを指定する
