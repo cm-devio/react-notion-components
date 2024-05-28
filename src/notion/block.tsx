@@ -351,7 +351,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							return (
 								<div className="flex items-center justify-center my-8">
 									{component && (
-										<Button variant={type} onClick={openNewTab}>
+										<Button variant={type} size="default" onClick={openNewTab}>
 											{text}
 										</Button>
 									)}
