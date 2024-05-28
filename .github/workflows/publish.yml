@@ -13,19 +13,16 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18  # ここを16から18に変更
-          registry-url: https://npm.pkg.github.com/
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Package install
-        run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Update package.json version
-        run: echo "Skipping version update on push event"
+      - name: Update package.json version  # Adapt for pnpm versioning strategy
+        run: echo "Skipping version update on push event (adapt for pnpm)"
 
       - name: Publish package
-        run: npm publish --access restricted
+        run: pnpm publish --access restricted
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
