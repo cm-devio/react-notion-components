@@ -1,6 +1,6 @@
 {
   "name": "react-notion-components",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/lib/main.d.ts",
