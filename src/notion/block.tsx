@@ -52,8 +52,21 @@ export const Block: React.FC<BlockInterface> = (props) => {
 	const [isClient, setIsClient] = useState(false);
 
 	useEffect(() => {
+		const overrideStyle = () => {
+			const style = document.createElement('style')
+			style.innerHTML = `
+				.znc pre:not(.language-css) {
+					padding: 16px;
+					color: white;
+					font-size: 14px;
+				}
+			`
+			document.head.appendChild(style)
+		}
+
 		setIsClient(true);
-	}, []);
+		overrideStyle()
+	}, [])
 
 	const renderComponent = () => {
 		const renderChildText = createRenderChildText(customDecoratorComponents);
@@ -368,6 +381,17 @@ export const Block: React.FC<BlockInterface> = (props) => {
 								</div>
 							);
 						}
+					}
+
+					if (language === "HTML") {
+						return (
+							<div
+								className="znc"
+								dangerouslySetInnerHTML={{
+									__html: content,
+								}}
+							/>
+						);
 					}
 					return (
 						<Code
