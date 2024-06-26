@@ -8,9 +8,7 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-// import { Heading } from "@/lib/main";
 import { CoverImage } from "@/components/ui/coverImage";
-import HubSpotForm from "@/components/ui/hubSpotForm";
 import { Slash } from "lucide-react";
 import type * as React from "react";
 import Asset from "./asset";
@@ -367,9 +365,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 									)}
 								</div>
 							);
-						}
-						if (component === "hubspot") {
-							return <HubSpotForm />;
 						}
 						if (component === "breadcrumb") {
 							return (

@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 // import { Heading } from "@/lib/main";
 import { CoverImage } from "@/components/ui/coverImage";
-import HubSpotForm from "@/components/ui/hubSpotForm";
 import { Slash } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
@@ -29,10 +28,12 @@ import {
 	getTextContent,
 	// getListNumber
 } from "./utils";
+import { HubspotForm } from "@/components/ui/hubSpotForm";
 
 export const Block: React.FC<BlockInterface> = (props) => {
 	const {
 		block,
+		portalId,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		children,
@@ -327,32 +328,20 @@ export const Block: React.FC<BlockInterface> = (props) => {
 					</figure>
 				);
 			case "code": {
-				// const ex = {
-				// 	region: "na1",
-				// 	portalId: "21302757",
-				// 	formId: "8b753f41-d17d-4f77-8759-a87c063e9e70",
-				// 	cssClass: "cm-form",
-				// 	translations: {
-				// 		ja: {
-				// 			submissionErrors: {
-				// 				MISSING_REQUIRED_FIELDS:
-				// 					"赤枠は必須項目です。入力内容を確認してください。",
-				// 			},
-				// 		},
-				// 	},
-				// };
-
 				if (blockValue.properties.title) {
 					const content = blockValue.properties.title[0][0];
-					// if (
-					// 	content.includes('id="hubspot"') &&
-					// 	content.includes("data-formid")
-					// ) {
-					// 	const formId = content.split('data-formid="')[1].split('"')[0];
-					// 	return (
-					// 		// <HubSpotForm />
-					// 	);
-					// }
+					const hasHubspot = content.includes('id="hubspot"');
+					const hasFormId = content.includes("data-formid");
+
+					if (
+						hasHubspot &&
+						hasFormId 
+					) {
+						const formId = content.split('data-formid="')[1].split('"')[0];
+						return (
+							portalId ? <HubspotForm portalId={portalId} formId={formId} />: ''
+						);
+					}
 					const language = blockValue.properties.language[0][0];
 
 					if (language === "JSON") {
@@ -370,9 +359,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 									)}
 								</div>
 							);
-						}
-						if (component === "hubspot") {
-							return <HubSpotForm />;
 						}
 						if (component === "breadcrumb") {
 							return (
