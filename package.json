@@ -31,6 +31,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@aaronhayes/react-use-hubspot-form": "^2.1.1",
     "@types/node": "^20.11.20",
     "@types/prismjs": "^1.26.3",
     "@types/react": "^18.2.56",
