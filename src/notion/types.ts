@@ -398,6 +398,7 @@ export type CustomDecoratorComponents = {
 
 export interface BlockInterface {
 	block: BlockType;
+	portalId?: string;
 	level: number;
 	blockMap: BlockMapType;
 	mapPageUrl: MapPageUrl;
