@@ -181,6 +181,7 @@ export type MetaData = {
 	eventDate: string;
 	category: CategoryName;
 	canonical: string;
+	formId: string
 };
 
 export interface NotionRendererProps {
