@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 // import { Heading } from "@/lib/main";
-import { CoverImage } from "@/components/ui/coverImage";
+// import { CoverImage } from "@/components/ui/coverImage";
 import { Slash } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
@@ -92,14 +92,14 @@ export const Block: React.FC<BlockInterface> = (props) => {
 			);
 		};
 
-		const Title = () => {
-			return (
-				<div className="flex items-center justify-between space-x-4 mt-8 mb-6">
-					{/* {pageIcon && <PageIcon block={block} big mapImageUrl={mapImageUrl} />} */}
-					{renderChildText(blockValue.properties.title, "1")}
-				</div>
-			);
-		};
+		// const Title = () => {
+		// 	return (
+		// 		<div className="flex items-center justify-between space-x-4 mt-8 mb-6">
+		// 			{/* {pageIcon && <PageIcon block={block} big mapImageUrl={mapImageUrl} />} */}
+		// 			{renderChildText(blockValue.properties.title, "1")}
+		// 		</div>
+		// 	);
+		// };
 
 		switch (blockValue?.type) {
 			case "page":
@@ -112,7 +112,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						const {
 							// page_icon,
 							page_cover,
-							page_cover_position,
+							// page_cover_position,
 							page_full_width,
 							page_small_text,
 						} = blockValue.format || {};
@@ -127,7 +127,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										mapImageUrl={mapImageUrl}
 									/>
 								)}
-								{pageCover && (
+								{/* {pageCover && (
 									<div className="w-full relative overflow-hidden rounded-b-3xl bg-gray-200 mb-8 h-48 md:h-64">
 										<CoverImage
 											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -137,7 +137,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 											objectPosition={page_cover_position}
 										/>
 									</div>
-								)}
+								)} */}
 								<main
 									className={classNames(
 										"notion-page",
@@ -150,9 +150,9 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										<CustomBreadcrumb />
 									</div> */}
 
-									<div className="mt-3 mb-1">
+									{/* <div className="mt-3 mb-1">
 										<Title />
-									</div>
+									</div> */}
 
 									{/* <div className="flex flex-row flex-wrap items-center justify-start">
 										{metaData?.tags?.length &&

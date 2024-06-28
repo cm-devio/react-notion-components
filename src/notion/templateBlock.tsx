@@ -69,14 +69,14 @@ export const Block: React.FC<BlockInterface> = (props) => {
 			);
 		};
 
-		const Title = () => {
-			return (
-				<div className="flex items-center justify-between space-x-4 mt-8 mb-6">
-					{/* {pageIcon && <PageIcon block={block} big mapImageUrl={mapImageUrl} />} */}
-					{renderChildText(blockValue.properties.title, "1")}
-				</div>
-			);
-		};
+		// const Title = () => {
+		// 	return (
+		// 		<div className="flex items-center justify-between space-x-4 mt-8 mb-6">
+		// 			{/* {pageIcon && <PageIcon block={block} big mapImageUrl={mapImageUrl} />} */}
+		// 			{renderChildText(blockValue.properties.title, "1")}
+		// 		</div>
+		// 	);
+		// };
 
 		switch (blockValue?.type) {
 			case "page":
@@ -141,9 +141,9 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										<CustomBreadcrumb />
 									</div> */}
 
-									<div className="mt-3 mb-1">
+									{/* <div className="mt-3 mb-1">
 										<Title />
-									</div>
+									</div> */}
 
 									{/* <div className="flex flex-row flex-wrap items-center justify-start">
 										{metaData?.tags?.length &&
