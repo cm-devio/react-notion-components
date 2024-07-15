@@ -1,3 +1,4 @@
+import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import type React from "react";
 import { Block } from "./block";
 import type {
@@ -8,7 +9,6 @@ import type {
 	MapPageUrl,
 } from "./types";
 import { defaultMapImageUrl, defaultMapPageUrl } from "./utils";
-import { HubspotProvider } from '@aaronhayes/react-use-hubspot-form'
 
 export type Tag = {
 	id: number;
@@ -174,6 +174,7 @@ export type NotionData = {
 export type MetaData = {
 	title: string;
 	description: string;
+	cover: string;
 	slug: string;
 	shareTitle: string;
 	lastEditedTime: string;
@@ -181,7 +182,7 @@ export type MetaData = {
 	eventDate: string;
 	category: CategoryName;
 	canonical: string;
-	formId: string
+	formId: string;
 };
 
 export interface NotionRendererProps {
