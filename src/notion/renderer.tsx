@@ -158,7 +158,11 @@ export type NotionData = {
 	last_edited_time: string;
 	created_by: { object: "user"; id: string };
 	last_edited_by: { object: "user"; id: string };
-	cover: { type: "external"; external: { url: string } };
+	cover: {
+		type: "external" | "file";
+		external: { url: string };
+		file: { url: string };
+	};
 	icon: null;
 	parent: {
 		type: "database_id";
