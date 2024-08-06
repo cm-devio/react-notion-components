@@ -187,6 +187,7 @@ export type MetaData = {
 	category: CategoryName;
 	canonical: string;
 	formId: string;
+	authorCategory: string;
 };
 
 export interface NotionRendererProps {
