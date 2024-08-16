@@ -14,7 +14,7 @@ export const createRenderChildText =
 				case "1": {
 					return (
 						<>
-							<h1 className="text-3xl" key={text}>
+							<h1 className="text-3xl font-bold" key={text}>
 								{text}
 								<hr className="my-2 border-t border-gray-300" />
 							</h1>
@@ -24,7 +24,7 @@ export const createRenderChildText =
 				case "2": {
 					return (
 						<>
-							<h2 className="text-2xl" key={text}>
+							<h2 className="text-2xl font-bold" key={text}>
 								{text}
 								<hr className="my-2 border-t border-gray-300" />
 							</h2>
@@ -33,7 +33,7 @@ export const createRenderChildText =
 				}
 				case "3": {
 					return (
-						<h3 className="text-xl" key={text}>
+						<h3 className="text-xl font-bold" key={text}>
 							{text}
 						</h3>
 					);
