@@ -4,12 +4,11 @@ import {
 	BreadcrumbLink,
 	BreadcrumbList,
 	BreadcrumbPage,
-	// BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-// import { Heading } from "@/lib/main";
-// import { CoverImage } from "@/components/ui/coverImage";
+import { HubspotForm } from "@/components/ui/hubSpotForm";
+import { Li } from "@/components/ui/li";
 import { Slash } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
@@ -19,16 +18,12 @@ import { createRenderChildText } from "./createRenderChildText";
 import PageHeader from "./page-header";
 import PageIcon from "./page-icon";
 import type {
-	// BlockValueProp,
 	BlockInterface,
 	ContentValueType,
+	DecorationType,
+	SubDecorationType,
 } from "./types";
-import {
-	classNames,
-	getTextContent,
-	// getListNumber
-} from "./utils";
-import { HubspotForm } from "@/components/ui/hubSpotForm";
+import { classNames, getTextContent } from "./utils";
 
 export const Block: React.FC<BlockInterface> = (props) => {
 	const {
@@ -43,9 +38,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		blockMap,
 		mapPageUrl,
 		mapImageUrl,
-		// customBlockComponents,
 		customDecoratorComponents,
-		// metaData,
 		notionData,
 	} = props;
 	const blockValue = block?.value;
@@ -54,20 +47,20 @@ export const Block: React.FC<BlockInterface> = (props) => {
 
 	useEffect(() => {
 		const overrideStyle = () => {
-			const style = document.createElement('style')
+			const style = document.createElement("style");
 			style.innerHTML = `
 				.znc pre:not(.language-css) {
 					padding: 16px;
 					color: white;
 					font-size: 14px;
 				}
-			`
-			document.head.appendChild(style)
-		}
+			`;
+			document.head.appendChild(style);
+		};
 
 		setIsClient(true);
-		overrideStyle()
-	}, [])
+		overrideStyle();
+	}, []);
 
 	const renderComponent = () => {
 		const renderChildText = createRenderChildText(customDecoratorComponents);
@@ -84,22 +77,15 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						</BreadcrumbSeparator>
 						<BreadcrumbItem>
 							<BreadcrumbPage>
-								{blockValue.properties.title[0][0]}
+								{blockValue.properties && "title" in blockValue.properties
+									? (blockValue.properties.title as string[][])[0][0]
+									: null}
 							</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
 			);
 		};
-
-		// const Title = () => {
-		// 	return (
-		// 		<div className="flex items-center justify-between space-x-4 mt-8 mb-6">
-		// 			{/* {pageIcon && <PageIcon block={block} big mapImageUrl={mapImageUrl} />} */}
-		// 			{renderChildText(blockValue.properties.title, "1")}
-		// 		</div>
-		// 	);
-		// };
 
 		switch (blockValue?.type) {
 			case "page":
@@ -109,15 +95,11 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							return null;
 						}
 
-						const {
-							// page_icon,
-							page_cover,
-							// page_cover_position,
-							page_full_width,
-							page_small_text,
-						} = blockValue.format || {};
+						const { page_cover, page_full_width, page_small_text } =
+							blockValue.format || {};
 
 						const pageCover = notionData?.cover?.external?.url || page_cover;
+
 						return (
 							<div className="notion">
 								{!hideHeader && (
@@ -127,17 +109,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										mapImageUrl={mapImageUrl}
 									/>
 								)}
-								{/* {pageCover && (
-									<div className="w-full relative overflow-hidden rounded-b-3xl bg-gray-200 mb-8 h-48 md:h-64">
-										<CoverImage
-											// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-											// @ts-ignore
-											src={pageCover}
-											alt={getTextContent(blockValue.properties.title)}
-											objectPosition={page_cover_position}
-										/>
-									</div>
-								)} */}
 								<main
 									className={classNames(
 										"notion-page",
@@ -146,52 +117,26 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										page_small_text && "notion-small-text",
 									)}
 								>
-									{/* <div className="space-y-4">
-										<CustomBreadcrumb />
-									</div> */}
-
-									{/* <div className="mt-3 mb-1">
-										<Title />
-									</div> */}
-
-									{/* <div className="flex flex-row flex-wrap items-center justify-start">
-										{metaData?.tags?.length &&
-											metaData?.tags.map((tag) => (
-												<div className="mr-2" key={tag}>
-													<span className="text-xs text-gray-500">{tag}</span>
-												</div>
-											))}
-									</div> */}
-
-									{/* <div className="my-2">
-										<span>Publish on: </span>
-										<span>
-											{new Date(blockValue.created_time).toDateString()}
-										</span>
-									</div> */}
-
 									{children}
 								</main>
 							</div>
 						);
-					} else {
-						return <main className="notion">{children}</main>;
 					}
-				} else {
-					if (!blockValue.properties) return null;
-					return (
-						<a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
-							{blockValue.format && (
-								<div className="notion-page-icon">
-									<PageIcon block={block} mapImageUrl={mapImageUrl} />
-								</div>
-							)}
-							<div className="notion-page-text">
-								{renderChildText(blockValue.properties.title)}
-							</div>
-						</a>
-					);
+					return <main className="notion">{children}</main>;
 				}
+				if (!blockValue.properties) return null;
+				return (
+					<a className="notion-page-link" href={mapPageUrl(blockValue.id)}>
+						{blockValue.format && (
+							<div className="notion-page-icon">
+								<PageIcon block={block} mapImageUrl={mapImageUrl} />
+							</div>
+						)}
+						<div className="notion-page-text">
+							{renderChildText(blockValue.properties.title)}
+						</div>
+					</a>
+				);
 			case "header":
 				if (!blockValue.properties) return null;
 				return (
@@ -221,18 +166,20 @@ export const Block: React.FC<BlockInterface> = (props) => {
 					return <div className="notion-blank">&nbsp;</div>;
 				}
 				return (
-					<p className={classNames(blockColor && `notion-${blockColor}`)}>
+					<p
+						className={classNames(blockColor && `notion-${blockColor} `)}
+						style={{
+							lineHeight: 1.8,
+						}}
+					>
 						{renderChildText(blockValue.properties.title)}
 					</p>
 				);
 			}
-			case "bulleted_list":
+			case "bulleted_list": {
 				if (!blockValue.properties) return null;
-				return (
-					<li className="list-disc">
-						{renderChildText(blockValue.properties.title)}
-					</li>
-				);
+				return <Li text={renderChildText(blockValue.properties.title)} />;
+			}
 			case "numbered_list":
 				if (!blockValue.properties) return null;
 
@@ -242,54 +189,23 @@ export const Block: React.FC<BlockInterface> = (props) => {
 					</ol>
 				);
 
-			// const output: JSX.Element | null = null;
-
-			// switch (blockValue.type) {
-			//   // case "paragraph":
-			//   //   // code for paragraph block
-			//   //   break;
-			//   // case "header":
-			//   //   // code for header block
-			//   //   break;
-			//   // case "sub_header":
-			//   //   // code for sub_header block
-			//   //   break;
-			//   // case "sub_sub_header":
-			//   //   // code for sub_sub_header block
-			//   //   break;
-			//   // case "divider":
-			//   //   // code for divider block
-			//   //   break;
-			//   // case "text":
-			//   //   // code for text block
-			//   //   break;
-			//   // case "to_do":
-			//   //   // code for to_do block
-			//   //   break;
-			//   default:
-			//     break;
-			// }
-
-			// return output;
-
-			case "to_do":
-				/**
-				 * There are only 3 possible cases when no nested to_dos:
-				 * 1. properties: {title: [["test"]], checked: [["No"]]}
-				 * 2. properties: {title: [["test"]], checked: [["Yes"]]}
-				 * 3. properties: {title: [["test"]]}
-				 */
-				const checkbox = block.value.properties;
+			case "to_do": {
+				const checkbox: { title: DecorationType[] } | undefined = block.value
+					.properties as { title: DecorationType[] };
 				const { id } = block.value;
 
-				// remove other styles in to-do.
 				const label: string = checkbox?.title
-					.flat(1) // only flatten the first level
-					.filter((ele: string | Array<string>) => typeof ele === "string")
+					.flat(1)
+					.filter(
+						(ele: string | SubDecorationType[]) => typeof ele === "string",
+					)
 					.join("");
 
 				const isChecked =
-					checkbox?.checked && checkbox?.checked[0][0] === "Yes";
+					checkbox &&
+					"checked" in checkbox &&
+					checkbox.checked &&
+					(checkbox.checked as string[][])[0][0] === "Yes";
 
 				return (
 					<div>
@@ -298,15 +214,16 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							type="checkbox"
 							name=""
 							id={id}
-							checked={isChecked}
+							checked={isChecked as boolean}
 						/>
 						<label htmlFor={id}>{label}</label>
 					</div>
 				);
+			}
 			case "image":
 			case "embed":
 			case "figma":
-			case "video":
+			case "video": {
 				const value = block.value as ContentValueType;
 
 				return (
@@ -327,19 +244,19 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						)}
 					</figure>
 				);
+			}
 			case "code": {
 				if (blockValue.properties.title) {
 					const content = blockValue.properties.title[0][0];
 					const hasHubspot = content.includes('id="hubspot"');
 					const hasFormId = content.includes("data-formid");
 
-					if (
-						hasHubspot &&
-						hasFormId 
-					) {
+					if (hasHubspot && hasFormId) {
 						const formId = content.split('data-formid="')[1].split('"')[0];
-						return (
-							portalId ? <HubspotForm portalId={portalId} formId={formId} />: ''
+						return portalId ? (
+							<HubspotForm portalId={portalId} formId={formId} />
+						) : (
+							""
 						);
 					}
 					const language = blockValue.properties.language[0][0];
@@ -353,7 +270,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							return (
 								<div className="flex items-center justify-center my-8">
 									{component && (
-										<Button variant={type} size="default" onClick={openNewTab}>
+										<Button variant={type} size="large" onClick={openNewTab}>
 											{text}
 										</Button>
 									)}
@@ -373,6 +290,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						return (
 							<div
 								className="znc"
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
 								dangerouslySetInnerHTML={{
 									__html: content,
 								}}
@@ -391,7 +309,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 			}
 			case "column_list":
 				return <div className="notion-row">{children}</div>;
-			case "column":
+			case "column": {
 				const spacerWith = 46;
 				const ratio = blockValue.format.column_ratio;
 				const columns = Number((1 / ratio).toFixed(0));
@@ -405,6 +323,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						<div className="notion-spacer" style={{ width: spacerWith }} />
 					</>
 				);
+			}
 			case "quote":
 				if (!blockValue.properties) return null;
 				return (
@@ -412,7 +331,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						{renderChildText(blockValue.properties.title)}
 					</blockquote>
 				);
-			case "collection_view":
+			case "collection_view": {
 				if (!block) return null;
 
 				const collectionView = block?.collection?.types[0];
@@ -431,10 +350,10 @@ export const Block: React.FC<BlockInterface> = (props) => {
 										<tr className="notion-tr">
 											{collectionView.format?.table_properties
 												?.filter((p) => p.visible)
-												.map((gp, index) => (
+												.map((gp) => (
 													<th
 														className="notion-th"
-														key={index}
+														key={`th-${gp.property}`}
 														style={{ minWidth: gp.width }}
 													>
 														{block.collection?.schema[gp.property]?.name}
@@ -444,26 +363,23 @@ export const Block: React.FC<BlockInterface> = (props) => {
 									</thead>
 
 									<tbody>
-										{block?.collection?.data.map((row, index) => (
-											<tr className="notion-tr" key={index}>
+										{block?.collection?.data.map((row) => (
+											<tr className="notion-tr" key={`row-${row.id}`}>
 												{collectionView.format?.table_properties
 													?.filter((p) => p.visible)
 													.map((gp, index) => (
 														<td
-															key={index}
-															className={
-																"notion-td " +
-																(gp.property === "title" ? "notion-bold" : "")
-															}
+															key={`row-${row.id}-${index}`}
+															className={`notion-td ${
+																gp.property === "title" ? "notion-bold" : ""
+															}`}
 														>
-															{
-																renderChildText(
-																	row[
-																		block.collection?.schema[gp.property]
-																			?.name ?? ""
-																	],
-																)!
-															}
+															{renderChildText([
+																row[
+																	block.collection?.schema[gp.property]?.name ??
+																		""
+																] as unknown as DecorationType,
+															])}
 														</td>
 													))}
 											</tr>
@@ -475,26 +391,27 @@ export const Block: React.FC<BlockInterface> = (props) => {
 
 						{collectionView?.type === "gallery" && (
 							<div className="notion-gallery">
-								{block.collection?.data.map((row, i) => (
-									<div key={`col-${i}`} className="notion-gallery-card">
+								{block.collection?.data.map((row) => (
+									<div key={`col-${row.id}`} className="notion-gallery-card">
 										<div className="notion-gallery-content">
 											{collectionView.format?.gallery_properties
 												?.filter((p) => p.visible)
 												.map((gp, idx) => {
 													const propertyName =
 														block.collection?.schema[gp.property]?.name;
-													const propertyValue = propertyName
-														? [row[propertyName]]
-														: [];
+													const propertyValue: DecorationType[] = propertyName
+														? [row[propertyName] as unknown as DecorationType]
+														: ([] as DecorationType[]);
 													return (
 														<p
-															key={idx + "item"}
-															className={
-																"notion-gallery-data " +
-																(idx === 0 ? "is-first" : "")
-															}
+															key={(
+																propertyValue[0] as unknown as DecorationType
+															).toString()}
+															className={`notion-gallery-data ${
+																idx === 0 ? "is-first" : ""
+															}`}
 														>
-															{getTextContent(propertyValue[0])}
+															{getTextContent([propertyValue[0]])}
 														</p>
 													);
 												})}
@@ -505,6 +422,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						)}
 					</div>
 				);
+			}
 			case "callout":
 				return (
 					<div
@@ -524,7 +442,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						</div>
 					</div>
 				);
-			case "bookmark":
+			case "bookmark": {
 				const link = blockValue.properties.link;
 				const title = blockValue.properties.title ?? link;
 				const description = blockValue.properties.description;
@@ -568,6 +486,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						</a>
 					</div>
 				);
+			}
 			case "toggle":
 				return (
 					<details className="notion-toggle">
@@ -579,13 +498,14 @@ export const Block: React.FC<BlockInterface> = (props) => {
 				return <div>{children}</div>;
 			case "table":
 				return <table className="table-auto">{children}</table>;
-
 			case "table_row":
 				return (
 					<tr className="flex flex-row">
 						{Object.values(blockValue.properties).map((text) => {
 							return (
-								<td className="p-2 w-full border">{renderChildText(text)}</td>
+								<td key={`td-${blockValue.id}`} className="p-2 w-full border">
+									{renderChildText(text)}
+								</td>
 							);
 						})}
 					</tr>
@@ -593,7 +513,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 
 			default:
 				if (process.env.NODE_ENV !== "production") {
-					console.log("Unsupported type " + block?.value?.type);
+					console.error(`Unsupported type ${block?.value?.type}`);
 				}
 				return <div />;
 		}

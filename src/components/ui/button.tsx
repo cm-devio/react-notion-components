@@ -15,9 +15,7 @@ type ConfigVariants = {
 	};
 	size: {
 		default: string;
-		sm: string;
-		lg: string;
-		icon: string;
+		large: string;
 	};
 };
 
@@ -26,8 +24,7 @@ const buttonVariants = cva<ConfigVariants>(
 	{
 		variants: {
 			variant: {
-				default:
-					"bg-primary text-primary-foreground shadow hover:bg-primary/90",
+				default: "bg-red",
 				destructive:
 					"bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
 				outline:
@@ -39,9 +36,7 @@ const buttonVariants = cva<ConfigVariants>(
 			},
 			size: {
 				default: "h-9 px-4 py-2",
-				sm: "h-8 rounded-md px-3 text-xs",
-				lg: "h-10 rounded-md px-8",
-				icon: "h-9 w-9",
+				large: "h-11 px-6 py-3",
 			},
 		},
 		defaultVariants: {
@@ -64,6 +59,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 		return (
 			<Comp
 				className={cn(buttonVariants({ variant, size, className }))}
+				style={{
+					textAlign: "center",
+					backgroundColor: "#e73649",
+					color: "#fff",
+					display: "inline-block",
+					fontWeight: 700,
+					lineHeight: "130%",
+					padding: "15px 20px",
+					borderRadius: "8px",
+					fontSize: size === "large" ? "150%" : "100%",
+				}}
 				ref={ref}
 				{...props}
 			/>
