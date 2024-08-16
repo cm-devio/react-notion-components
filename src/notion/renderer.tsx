@@ -233,7 +233,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
 			<div>
 				<HubspotProvider>
 					{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-					{/* @ts-ignore */}
+					{/* @ts-expect-error */}
 					<Block
 						key={id}
 						portalId={portalId}

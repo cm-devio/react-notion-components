@@ -28,7 +28,7 @@ interface BaseValueType {
 	last_edited_by_id: string;
 	space_id?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	properties?: any;
+	properties?: Record<string, unknown>;
 	content?: string[];
 }
 
@@ -273,7 +273,6 @@ export interface TweetType extends BaseValueType {
 	};
 }
 
-// table_row
 interface TableRowType extends BaseValueType {
 	type: "table_row";
 	properties: {
@@ -354,8 +353,7 @@ export interface RecordMapType {
 export interface LoadPageChunkData {
 	recordMap: RecordMapType;
 	cursor: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		stack: any[];
+		stack: unknown[];
 	};
 }
 
@@ -378,14 +376,12 @@ export type CustomBlockComponents = {
 type SubDecorationSymbol = SubDecorationType[0];
 type SubDecorationValue<T extends SubDecorationSymbol> = Extract<
 	SubDecorationType,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[T, any]
+	[T, unknown]
 >[1];
 
 export type CustomDecoratorComponentProps<T extends SubDecorationSymbol> =
 	(SubDecorationValue<T> extends never
-		? // eslint-disable-next-line @typescript-eslint/ban-types
-			{}
+		? unknown
 		: {
 				decoratorValue: SubDecorationValue<T>;
 			}) & {
