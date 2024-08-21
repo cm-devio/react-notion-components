@@ -43,6 +43,8 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "node-html-parser": "^6.1.13",
+    "notion-page-to-html": "^1.2.0",
     "postcss": "^8.4.41",
     "prismjs": "^1.29.0",
     "react": "^18.3.1",
