@@ -46,8 +46,7 @@ const buttonVariants = cva<ConfigVariants>(
 	},
 );
 
-export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: keyof ConfigVariants["variant"];
 	size?: keyof ConfigVariants["size"];
 	asChild?: boolean;
