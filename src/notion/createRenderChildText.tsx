@@ -1,3 +1,4 @@
+import { Heading } from "@/stories/Heading";
 import React from "react";
 import type {
 	CustomDecoratorComponentProps,
@@ -24,18 +25,19 @@ export const createRenderChildText =
 				case "2": {
 					return (
 						<>
-							<h2 className="text-2xl font-bold" key={text} id={encodeURIComponent(text)}>
+							<Heading level={2} key={text} id={encodeURIComponent(text)}>
 								{text}
 								<hr className="my-2 border-t border-gray-300" />
-							</h2>
+							</Heading>
 						</>
 					);
 				}
 				case "3": {
 					return (
-						<h3 className="text-xl font-bold" key={text} id={encodeURIComponent(text)}>
+						<Heading level={3} key={text} id={encodeURIComponent(text)}>
 							{text}
-						</h3>
+							<hr className="my-2 border-t border-gray-300" />
+						</Heading>
 					);
 				}
 			}

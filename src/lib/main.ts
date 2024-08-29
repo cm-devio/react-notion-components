@@ -3,4 +3,4 @@ export { NotionTableOfContents } from "../notion/tableOfContents";
 export * from "../notion/types";
 export * from "./utils";
 export * from "../notion/block";
-export { Heading } from "@/components/ui/heading";
+export { Heading } from "@/stories/Heading";

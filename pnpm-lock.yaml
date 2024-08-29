@@ -130,6 +130,9 @@ devDependencies:
   vite-plugin-dts:
     specifier: ^4.0.3
     version: 4.0.3(@types/node@20.16.2)(typescript@5.5.4)(vite@5.4.2)
+  zenn-content-css:
+    specifier: ^0.1.155
+    version: 0.1.155
 
 packages:
 
@@ -7204,4 +7207,8 @@ packages:
   /yoctocolors-cjs@2.1.2:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
+    dev: true
+
+  /zenn-content-css@0.1.155:
+    resolution: {integrity: sha512-YR22ASOK/R86zPBr7fGSmuAO4urPSaAIzo0n1ZXt9MTsv5XRQuXMKWoqgvpTxE+kTrMnAREORH6IBKoy9ZOgUQ==}
     dev: true

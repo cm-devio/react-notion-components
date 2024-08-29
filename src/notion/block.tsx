@@ -5,10 +5,10 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { HubspotForm } from "@/components/ui/hubSpotForm";
-import { Li } from "@/components/ui/li";
+} from "@/stories/Breadcrumb";
+import { Button } from "@/stories/Button";
+import { HubspotForm } from "@/stories/HubspotForm";
+import { Li } from "@/stories/Li";
 import { Slash } from "lucide-react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
