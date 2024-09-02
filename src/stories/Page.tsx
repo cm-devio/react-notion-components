@@ -1,5 +1,5 @@
 import { NotionRenderer } from "@/notion/renderer";
-import type { BlockMapType } from "@/notion/types";
+import type { BlockMapType } from "@/types";
 
 export interface PageProps {
 	blocks: BlockMapType;

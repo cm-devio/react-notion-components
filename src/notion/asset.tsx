@@ -1,5 +1,5 @@
+import type { BlockType, ContentValueType, MapImageUrl } from "@/types";
 import type * as React from "react";
-import type { BlockType, ContentValueType, MapImageUrl } from "./types";
 
 const types = ["video", "image", "embed", "figma"];
 

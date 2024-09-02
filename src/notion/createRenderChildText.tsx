@@ -1,15 +1,16 @@
 import { Heading } from "@/stories/Heading";
-import React from "react";
 import type {
 	CustomDecoratorComponentProps,
 	CustomDecoratorComponents,
 	DecorationType,
 	SubDecorationType,
-} from "./types";
+} from "@/types";
+import React from "react";
 
 export const createRenderChildText =
 	(customDecoratorComponents?: CustomDecoratorComponents) =>
 	(properties: DecorationType[], heading?: string) => {
+		console.log("properties:", properties);
 		return properties?.map(([text, decorations]) => {
 			switch (heading) {
 				case "1": {

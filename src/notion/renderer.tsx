@@ -1,14 +1,14 @@
-import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
-import type React from "react";
-import { Block } from "./block";
 import type {
 	BlockMapType,
 	CustomBlockComponents,
 	CustomDecoratorComponents,
 	MapImageUrl,
 	MapPageUrl,
-} from "./types";
-import { defaultMapImageUrl, defaultMapPageUrl } from "./utils";
+} from "@/types";
+import { defaultMapImageUrl, defaultMapPageUrl } from "@/utils";
+import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
+import type React from "react";
+import { Block } from "./block";
 
 export type Tag = {
 	id: number;

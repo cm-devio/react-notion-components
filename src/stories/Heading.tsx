@@ -7,7 +7,7 @@ const Heading = ({
 }: {
 	level: 1 | 2 | 3;
 	children: React.ReactNode;
-	id: string;
+	id?: string;
 }) => {
 	const Tag = `h${level}` as "h1" | "h2" | "h3";
 	const customClassName = `text-${

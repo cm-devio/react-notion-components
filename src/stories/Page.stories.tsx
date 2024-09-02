@@ -1,9 +1,9 @@
-import type { BlockMapType } from "@/notion/types";
+import type { BlockMapType } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Page } from "./Page";
 import "zenn-content-css";
-import "../globals.css";
+import "@/globals.css";
 
 const geNotionPage = async ({
 	slug,

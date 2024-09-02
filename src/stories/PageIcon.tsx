@@ -1,12 +1,12 @@
-import type * as React from "react";
 import type {
 	BlockType,
 	BlockValueType,
 	CalloutValueType,
 	MapImageUrl,
 	PageValueType,
-} from "./types";
-import { classNames, getTextContent } from "./utils";
+} from "@/types";
+import { classNames, getTextContent } from "@/utils";
+import type * as React from "react";
 
 const isIconBlock = (
 	value: BlockValueType,
@@ -21,7 +21,7 @@ interface AssetProps {
 	className?: string;
 }
 
-const PageIcon: React.FC<AssetProps> = ({
+export const PageIcon: React.FC<AssetProps> = ({
 	block,
 	className,
 	big,
@@ -50,5 +50,3 @@ const PageIcon: React.FC<AssetProps> = ({
 		</span>
 	);
 };
-
-export default PageIcon;

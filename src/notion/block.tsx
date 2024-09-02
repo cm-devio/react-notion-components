@@ -1,29 +1,18 @@
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/stories/Breadcrumb";
+import { createRenderChildText } from "@/notion/createRenderChildText";
 import { Button } from "@/stories/Button";
 import { HubspotForm } from "@/stories/HubspotForm";
 import { Li } from "@/stories/Li";
-import { Slash } from "lucide-react";
-import type * as React from "react";
-import { useEffect, useState } from "react";
-import Asset from "./asset";
-import Code from "./code";
-import { createRenderChildText } from "./createRenderChildText";
-import PageHeader from "./page-header";
-import PageIcon from "./page-icon";
+import { PageIcon } from "@/stories/PageIcon";
 import type {
 	BlockInterface,
 	ContentValueType,
 	DecorationType,
 	SubDecorationType,
-} from "./types";
-import { classNames, getTextContent } from "./utils";
+} from "@/types";
+import { classNames, getTextContent } from "@/utils";
+import type * as React from "react";
+import { useEffect, useState } from "react";
+import Asset from "./asset";
 
 export const Block: React.FC<BlockInterface> = (props) => {
 	const {
@@ -34,8 +23,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		children,
 		level,
 		fullPage,
-		hideHeader,
-		blockMap,
 		mapPageUrl,
 		mapImageUrl,
 		customDecoratorComponents,
@@ -65,28 +52,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 	const renderComponent = () => {
 		const renderChildText = createRenderChildText(customDecoratorComponents);
 
-		const CustomBreadcrumb = () => {
-			return (
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink href="/">Home</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator>
-							<Slash />
-						</BreadcrumbSeparator>
-						<BreadcrumbItem>
-							<BreadcrumbPage>
-								{blockValue.properties && "title" in blockValue.properties
-									? (blockValue.properties.title as string[][])[0][0]
-									: null}
-							</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
-			);
-		};
-
 		switch (blockValue?.type) {
 			case "page":
 				if (level === 0) {
@@ -102,13 +67,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 
 						return (
 							<div className="notion">
-								{!hideHeader && (
-									<PageHeader
-										blockMap={blockMap}
-										mapPageUrl={mapPageUrl}
-										mapImageUrl={mapImageUrl}
-									/>
-								)}
 								<main
 									className={classNames(
 										"notion-page",
@@ -277,13 +235,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 								</div>
 							);
 						}
-						if (component === "breadcrumb") {
-							return (
-								<div className="my-8">
-									<CustomBreadcrumb />
-								</div>
-							);
-						}
 					}
 
 					if (language === "HTML") {
@@ -297,13 +248,6 @@ export const Block: React.FC<BlockInterface> = (props) => {
 							/>
 						);
 					}
-					return (
-						<Code
-							key={blockValue.id}
-							language={language || ""}
-							code={content}
-						/>
-					);
 				}
 				return null;
 			}

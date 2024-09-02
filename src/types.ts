@@ -9,7 +9,7 @@
  */
 
 import type { FC } from "react";
-import type { MetaData, NotionData } from "./renderer";
+import type { MetaData, NotionData } from "./notion/renderer";
 
 /**
  * Base properties that all blocks share.
