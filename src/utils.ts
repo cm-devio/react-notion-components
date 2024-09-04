@@ -1,3 +1,5 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import type { BlockMapType, DecorationType, MapImageUrl } from "./types";
 
 export const classNames = (...classes: Array<string | undefined | false>) =>
@@ -70,3 +72,7 @@ export const defaultMapPageUrl = (pageId = "") => {
 
 	return `/${formattedPageId}`;
 };
+
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs));
+}

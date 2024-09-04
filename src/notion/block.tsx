@@ -220,16 +220,15 @@ export const Block: React.FC<BlockInterface> = (props) => {
 					const language = blockValue.properties.language[0][0];
 
 					if (language === "JSON") {
-						const { type, link, component, text } = JSON.parse(content);
+						const { type, link, component, text, size } = JSON.parse(content);
 						if (component === "button") {
-							const openNewTab = () => {
-								window.open(link, "_blank");
-							};
 							return (
 								<div className="flex items-center justify-center my-8">
 									{component && (
-										<Button variant={type} size="large" onClick={openNewTab}>
-											{text}
+										<Button variant={type} size={size}>
+											<a href={link} target="_blank" rel="noreferrer">
+												{text}
+											</a>
 										</Button>
 									)}
 								</div>

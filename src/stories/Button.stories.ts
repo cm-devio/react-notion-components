@@ -8,14 +8,7 @@ const meta: Meta<typeof Button> = {
 		variant: {
 			control: {
 				type: "select",
-				options: [
-					"default",
-					"destructive",
-					"outline",
-					"secondary",
-					"ghost",
-					"link",
-				],
+				options: ["default", "destructive", "outline"],
 			},
 		},
 		size: {
@@ -44,11 +37,11 @@ export const Default: Story = {
 	},
 };
 
-export const Destructive: Story = {
+export const Large: Story = {
 	args: {
-		variant: "destructive",
-		size: "default",
-		children: "Destructive Button",
+		variant: "default",
+		size: "large",
+		children: "Large Button",
 	},
 };
 
@@ -57,45 +50,5 @@ export const Outline: Story = {
 		variant: "outline",
 		size: "default",
 		children: "Outline Button",
-	},
-};
-
-export const Secondary: Story = {
-	args: {
-		variant: "secondary",
-		size: "default",
-		children: "Secondary Button",
-	},
-};
-
-export const Ghost: Story = {
-	args: {
-		variant: "ghost",
-		size: "default",
-		children: "Ghost Button",
-	},
-};
-
-export const Link: Story = {
-	args: {
-		variant: "link",
-		size: "default",
-		children: "Link Button",
-	},
-};
-
-export const LargeButton: Story = {
-	args: {
-		variant: "default",
-		size: "large",
-		children: "Large Button",
-	},
-};
-
-export const AsChild: Story = {
-	args: {
-		variant: "default",
-		size: "default",
-		children: "As Child Button",
 	},
 };

@@ -1,57 +1,57 @@
+import { cn } from "@/utils";
+import { Slot } from "@radix-ui/react-slot";
+import { type VariantProps, cva } from "cva";
 import * as React from "react";
 
 export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?:
-		| "default"
-		| "destructive"
-		| "outline"
-		| "secondary"
-		| "ghost"
-		| "link";
-	size?: "default" | "large";
-	ref?: React.Ref<HTMLButtonElement>;
+	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+		VariantProps<typeof buttonStyles> {
+	asChild?: boolean;
 }
 
-const getButtonClasses = (
-	variant: string,
-	size: string,
-	className?: string,
-) => {
-	const baseClasses =
-		"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:underline";
+const buttonStyles = cva({
+	base: [
+		"whitespace-nowrap rounded-md",
+		"inline-flex items-center justify-center",
+		"font-medium transition-colors",
+		"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+		"disabled:pointer-events-none disabled:opacity-50",
+	],
+	variants: {
+		variant: {
+			default:
+				"bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-300",
+			outline:
+				"border border-gray-900 text-dark-900 bg-white hover:bg-gray-900 hover:text-white",
+		},
+		size: {
+			default: "text-base",
+			large: "text-lg",
+		},
+	},
+	defaultVariants: {
+		variant: "default",
+		size: "large",
+	},
+});
 
-	const variantClasses: { [key: string]: string } = {
-		default: "bg-red-500 text-white hover:bg-red-600",
-		destructive:
-			"bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-		outline:
-			"border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-		secondary:
-			"bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-		ghost: "hover:bg-accent hover:text-accent-foreground",
-		link: "text-primary underline-offset-4",
-	};
-
-	const sizeClasses: { [key: string]: string } = {
-		default: "h-9 px-4 py-2",
-		large: "h-11 px-6 py-3 text-lg",
-	};
-
-	return `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${
-		className || ""
-	}`;
-};
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, variant = "default", size = "default", ...props }) => {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+	({ className, variant, size = "large", asChild = false, ...props }, ref) => {
+		const Comp = asChild ? Slot : "button";
 		return (
-			<button
-				className={getButtonClasses(variant, size, className)}
+			<Comp
+				className={cn(buttonStyles({ variant, size, className }))}
+				ref={ref}
 				{...props}
+				style={{
+					textAlign: "center",
+					backgroundColor: "#e73649",
+					padding: "15px 20px",
+					borderRadius: "8px",
+					fontSize: size === "large" ? "150%" : "100%",
+					display: "inline-block",
+				}}
 			/>
 		);
 	},
 );
-
-export { Button };
