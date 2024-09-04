@@ -33,7 +33,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@aaronhayes/react-use-hubspot-form": "^2.1.1",
     "@chromatic-com/storybook": "^1.7.0",
     "@storybook/addon-essentials": "^8.2.9",
     "@storybook/addon-interactions": "^8.2.9",
