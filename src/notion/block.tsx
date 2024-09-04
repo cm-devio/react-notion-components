@@ -1,6 +1,5 @@
 import { createRenderChildText } from "@/notion/createRenderChildText";
 import { Button } from "@/stories/Button";
-import { HubspotForm } from "@/stories/HubspotForm";
 import { Li } from "@/stories/Li";
 import { PageIcon } from "@/stories/PageIcon";
 import type {
@@ -17,7 +16,6 @@ import Asset from "./asset";
 export const Block: React.FC<BlockInterface> = (props) => {
 	const {
 		block,
-		portalId,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		children,
@@ -206,17 +204,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 			case "code": {
 				if (blockValue.properties.title) {
 					const content = blockValue.properties.title[0][0];
-					const hasHubspot = content.includes('id="hubspot"');
-					const hasFormId = content.includes("data-formid");
 
-					if (hasHubspot && hasFormId) {
-						const formId = content.split('data-formid="')[1].split('"')[0];
-						return portalId ? (
-							<HubspotForm portalId={portalId} formId={formId} />
-						) : (
-							""
-						);
-					}
 					const language = blockValue.properties.language[0][0];
 
 					if (language === "JSON") {

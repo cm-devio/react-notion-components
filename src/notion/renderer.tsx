@@ -6,7 +6,6 @@ import type {
 	MapPageUrl,
 } from "@/types";
 import { defaultMapImageUrl, defaultMapPageUrl } from "@/utils";
-import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import type React from "react";
 import { Block } from "./block";
 
@@ -196,8 +195,6 @@ export interface NotionRendererProps {
 	hideHeader?: boolean;
 	mapPageUrl?: MapPageUrl;
 	mapImageUrl?: MapImageUrl;
-	portalId?: string;
-
 	currentId?: string;
 	level?: number;
 	customBlockComponents?: CustomBlockComponents;
@@ -213,7 +210,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
 	mapImageUrl = defaultMapImageUrl,
 	...props
 }) => {
-	const { blockMap, portalId } = props;
+	const { blockMap } = props;
 	const id = currentId || Object.keys(blockMap)[0];
 	const currentBlock = blockMap[id];
 
@@ -225,38 +222,28 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
 	}
 
 	return (
-		<>
-			<link
-				rel="stylesheet"
-				href="https://hs.classmethod.jp/hubfs/src/hubspot_form_style.css"
-			/>
-			<div>
-				<HubspotProvider>
-					{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-					{/* @ts-expect-error */}
-					<Block
-						key={id}
-						portalId={portalId}
-						level={level}
-						block={currentBlock}
+		<div>
+			{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+			{/* @ts-expect-error */}
+			<Block
+				key={id}
+				level={level}
+				block={currentBlock}
+				mapPageUrl={mapPageUrl}
+				mapImageUrl={mapImageUrl}
+				{...props}
+			>
+				{currentBlock?.value?.content?.map((contentId) => (
+					<NotionRenderer
+						key={contentId}
+						currentId={contentId}
+						level={level + 1}
 						mapPageUrl={mapPageUrl}
 						mapImageUrl={mapImageUrl}
 						{...props}
-					>
-						{currentBlock?.value?.content?.map((contentId) => (
-							<NotionRenderer
-								key={contentId}
-								portalId={portalId}
-								currentId={contentId}
-								level={level + 1}
-								mapPageUrl={mapPageUrl}
-								mapImageUrl={mapImageUrl}
-								{...props}
-							/>
-						))}
-					</Block>
-				</HubspotProvider>
-			</div>
-		</>
+					/>
+				))}
+			</Block>
+		</div>
 	);
 };
