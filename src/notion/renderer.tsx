@@ -15,8 +15,6 @@ export type Tag = {
 	slug: string;
 };
 
-export type CategoryName = "セミナー" | "会社説明会";
-
 export type Property = {
 	Title: {
 		id: string;
@@ -101,7 +99,7 @@ export type Property = {
 	Category: {
 		id: string;
 		type: "select";
-		select: { name: CategoryName };
+		select: { name: string };
 	};
 	Canonical: {
 		id: string;
@@ -175,18 +173,7 @@ export type NotionData = {
 };
 
 export type MetaData = {
-	title: string;
-	description: string;
-	cover: string;
-	slug: string;
-	shareTitle: string;
-	lastEditedTime: string;
-	publishDate: string;
-	eventDate: string;
-	category: CategoryName;
-	canonical: string;
-	formId: string;
-	authorCategory: string;
+	[key: string]: string;
 };
 
 export interface NotionRendererProps {
