@@ -173,7 +173,7 @@ export type NotionData = {
 };
 
 export type MetaData = {
-	[key: string]: string;
+	[key: string]: string | string[] | boolean;
 };
 
 export interface NotionRendererProps {
