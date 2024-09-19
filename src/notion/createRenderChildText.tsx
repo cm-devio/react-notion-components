@@ -37,7 +37,6 @@ export const createRenderChildText =
 					return (
 						<Heading level={3} key={text} id={encodeURIComponent(text)}>
 							{text}
-							<hr className="my-2 border-t border-gray-300" />
 						</Heading>
 					);
 				}

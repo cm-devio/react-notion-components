@@ -11,7 +11,7 @@ const Heading = ({
 }) => {
 	const Tag = `h${level}` as "h1" | "h2" | "h3";
 	const customClassName = `text-${
-		level === 1 ? "4xl" : level === 2 ? "3xl" : "2xl"
+		level === 1 ? "3xl" : level === 2 ? "2xl" : "xl"
 	} font-bold`;
 
 	return (
