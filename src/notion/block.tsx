@@ -103,14 +103,14 @@ export const Block: React.FC<BlockInterface> = (props) => {
 			case "sub_header":
 				if (!blockValue.properties) return null;
 				return (
-					<div className="my-6 mb-4">
+					<div className="my-8">
 						{renderChildText(blockValue.properties.title, "2")}
 					</div>
 				);
 			case "sub_sub_header":
 				if (!blockValue.properties) return null;
 				return (
-					<div className="my-4 mb-2">
+					<div className="my-8">
 						{renderChildText(blockValue.properties.title, "3")}
 					</div>
 				);
