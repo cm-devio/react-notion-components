@@ -9,5 +9,14 @@ export const theme = {
 				"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 		},
 	},
+	compilerOptions: {
+		composite: true,
+		skipLibCheck: true,
+		module: "ESNext",
+		moduleResolution: "bundler",
+		allowSyntheticDefaultImports: true,
+		strict: true,
+	},
+	include: ["vite.config.ts"],
 };
 export const plugins = [tailwindcssAnimate];
