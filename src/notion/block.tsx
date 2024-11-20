@@ -1,6 +1,5 @@
 import { createRenderChildText } from "@/notion/createRenderChildText";
 import { Button } from "@/stories/Button";
-import { Li } from "@/stories/Li";
 import { PageIcon } from "@/stories/PageIcon";
 import type {
 	BlockInterface,
@@ -8,7 +7,7 @@ import type {
 	DecorationType,
 	SubDecorationType,
 } from "@/types";
-import { classNames, getTextContent } from "@/utils";
+import { classNames, getListNumber, getTextContent } from "@/utils";
 import type * as React from "react";
 import { useEffect, useState } from "react";
 import Asset from "./asset";
@@ -16,6 +15,7 @@ import Asset from "./asset";
 export const Block: React.FC<BlockInterface> = (props) => {
 	const {
 		block,
+		blockMap,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		children,
@@ -132,19 +132,57 @@ export const Block: React.FC<BlockInterface> = (props) => {
 					</p>
 				);
 			}
-			case "bulleted_list": {
-				if (!blockValue.properties) return null;
-				return <Li text={renderChildText(blockValue.properties.title)} />;
+			case "bulleted_list":
+			case "numbered_list": {
+				const wrapList = (content: React.ReactNode, start?: number) =>
+					blockValue.type === "bulleted_list" ? (
+						<ul
+							style={{
+								listStyleType: "disc",
+								paddingLeft: "1.5rem",
+								paddingTop: "0.25rem",
+								paddingBottom: "0.25rem",
+							}}
+						>
+							{content}
+						</ul>
+					) : (
+						<ol
+							start={start}
+							style={{
+								listStyleType: "decimal",
+								paddingLeft: "1.5rem",
+								paddingTop: "0.25rem",
+								paddingBottom: "0.25rem",
+							}}
+						>
+							{content}
+						</ol>
+					);
+
+				let output: JSX.Element | null = null;
+
+				if (blockValue.content) {
+					output = (
+						<>
+							{blockValue.properties && (
+								<li>{renderChildText(blockValue.properties.title)}</li>
+							)}
+							{wrapList(children)}
+						</>
+					);
+				} else {
+					output = blockValue.properties ? (
+						<li>{renderChildText(blockValue.properties.title)}</li>
+					) : null;
+				}
+
+				const isTopLevel =
+					block.value.type !== blockMap[block.value.parent_id].value.type;
+				const start = getListNumber(blockValue.id, blockMap);
+
+				return isTopLevel ? wrapList(output, start) : output;
 			}
-			case "numbered_list":
-				if (!blockValue.properties) return null;
-
-				return (
-					<ol className="list-decimal">
-						{renderChildText(blockValue.properties.title)}
-					</ol>
-				);
-
 			case "to_do": {
 				const checkbox: { title: DecorationType[] } | undefined = block.value
 					.properties as { title: DecorationType[] };

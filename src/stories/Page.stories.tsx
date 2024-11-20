@@ -41,7 +41,6 @@ export const WithSlug: Story = {
 
 			try {
 				const data = await geNotionPage({ slug });
-				console.log("data", data);
 				setPageData(data);
 			} catch {
 				setError(

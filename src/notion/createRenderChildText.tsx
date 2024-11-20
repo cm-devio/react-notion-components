@@ -10,7 +10,6 @@ import React from "react";
 export const createRenderChildText =
 	(customDecoratorComponents?: CustomDecoratorComponents) =>
 	(properties: DecorationType[], heading?: string) => {
-		console.log("properties:", properties);
 		return properties?.map(([text, decorations]) => {
 			switch (heading) {
 				case "1": {
