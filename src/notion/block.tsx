@@ -24,7 +24,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 		mapPageUrl,
 		mapImageUrl,
 		customDecoratorComponents,
-		notionData,
+		metaData
 	} = props;
 	const blockValue = block?.value;
 
@@ -61,7 +61,7 @@ export const Block: React.FC<BlockInterface> = (props) => {
 						const { page_cover, page_full_width, page_small_text } =
 							blockValue.format || {};
 
-						const pageCover = notionData?.cover?.external?.url || page_cover;
+						const pageCover = metaData?.cover || page_cover;
 
 						return (
 							<div className="notion">

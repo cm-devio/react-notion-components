@@ -186,7 +186,6 @@ export interface NotionRendererProps {
 	level?: number;
 	customBlockComponents?: CustomBlockComponents;
 	customDecoratorComponents?: CustomDecoratorComponents;
-	notionData?: NotionData;
 	metaData?: MetaData;
 }
 
